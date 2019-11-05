@@ -54,7 +54,6 @@ export default class Counter extends Component {
 
   render() {
     const { count, isCounting } = this.state;
-    console.log('TLC: Counter -> render -> isCounting', isCounting);
     return (
       <div className="wrap">
         <div className="card">
