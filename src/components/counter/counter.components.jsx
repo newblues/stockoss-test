@@ -10,6 +10,7 @@ export default class Counter extends Component {
 
     this.state = {
       count: 0,
+      isCounting: false,
     };
   }
 
@@ -20,33 +21,52 @@ export default class Counter extends Component {
     initialCount
       ? this.setState({
           count: initialCount,
+          isCounting: true,
         })
       : this.setState({
           count: 0,
+          isCounting: true,
         });
-    this.doIntervalChange();
+    this.startCounter();
   }
 
-  doIntervalChange = () => {
+  startCounter = () => {
     this.myInterval = setInterval(() => {
-      this.setState(prevState => ({ count: prevState.count + 1 }));
+      this.setState(prevState => ({ count: prevState.count + 1, isCounting: true }));
     }, 1000);
   };
 
-  componentWillUnmount() {
+  stopCounter = () => {
     clearInterval(this.myInterval);
+    this.setState({
+      isCounting: false,
+    });
+  };
+
+  resetCounter = () => {
+    this.stopCounter();
+    this.componentDidMount();
+  };
+
+  componentWillUnmount() {
+    this.stopCounter(this.myInterval);
   }
 
   render() {
-    const { count } = this.state;
+    const { count, isCounting } = this.state;
+    console.log('TLC: Counter -> render -> isCounting', isCounting);
     return (
       <div className="wrap">
         <div className="card">
           <span className="span">{count}</span>
         </div>
         <div className="button-container">
-          <CustomButton>Stop</CustomButton>
-          <CustomButton>Reset</CustomButton>
+          {isCounting ? (
+            <CustomButton onClick={() => this.stopCounter()}>Stop</CustomButton>
+          ) : (
+            <CustomButton onClick={() => this.startCounter()}>Start</CustomButton>
+          )}
+          <CustomButton onClick={() => this.resetCounter()}>Reset</CustomButton>
         </div>
       </div>
     );
