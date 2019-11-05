@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import './counter.styles.css';
 
+import CustomButton from '../custom-button/custom-button.components';
+
 export default class Counter extends Component {
   constructor(props) {
     super(props);
@@ -41,6 +43,10 @@ export default class Counter extends Component {
       <div className="wrap">
         <div className="card">
           <span className="span">{count}</span>
+        </div>
+        <div className="button-container">
+          <CustomButton>Stop</CustomButton>
+          <CustomButton>Reset</CustomButton>
         </div>
       </div>
     );
