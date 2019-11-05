@@ -9,7 +9,8 @@ const App = () => {
   return (
     <div className="App">
       <Switch>
-        <Route exact path="/" component={Counter} />
+        <Redirect exact from="/" to="/counter/0" />
+        <Route exact path="/counter/:id" component={Counter} />
       </Switch>
     </div>
   );
